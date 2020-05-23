@@ -158,9 +158,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
           <Content
             className="site-layout-background"
             style={{
-              padding: 24,
+              padding: 0,
               margin: 0,
               minHeight: 280,
+              minWidth: 1000,
+              overflowX: 'auto',
             }}
           >
             {children}

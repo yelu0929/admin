@@ -5,7 +5,6 @@ export default {
   // GET POST 可省略
   'POST /services/login': (req: Request, res: Response) => {
     const { password, userName, type } = req.body;
-    console.log('111111111111111111', req.body)
     if (password === '123456' && userName === 'admin') {
       res.send({
         status: 'ok',
@@ -30,7 +29,6 @@ export default {
   },
   'POST /services/logout': (req: Request, res: Response) => {
     const {  userName } = req.body;
-    console.log('111111111111111111', req.body)
     if (userName === 'admin') {
       res.send({
         status: 'ok',

@@ -26,8 +26,13 @@ export default [
           },
           {
             path: '/home',
-            name: '首页',
+            name: '??',
             component: './Welcome'
+          },
+          {
+            path: '/userManagement',
+            name: '????',
+            component: './UserManagement/UserManagement'
           },
           // {
           //   path: '/welcome',
