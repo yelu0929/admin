@@ -2,6 +2,8 @@ import React, { Component, ReactNode } from 'React'
 import SearchTable, { serchData } from '@/components/SearchTable/SearchTable'
 import { Button, Divider, Popconfirm, Space, Row, Col, Input, Form, Modal, message } from 'antd'
 import { getServices } from '@/services/searchTable'
+import AddUser from '@/pages/UserManagement/AddUser'
+import FormWrapper from '@/components/FormWrapper/FormWrapper'
 
 interface IUserManagementProps {
 
@@ -28,6 +30,7 @@ export default class UserManagement extends Component<IUserManagementProps, IUse
       title: '序号',
       key: 'xuhao',
       dataIndex: 'xuhao',
+      align: 'center',
       render: (text: any, record: any, index: any) => {
         return index + 1
       }
@@ -36,26 +39,37 @@ export default class UserManagement extends Component<IUserManagementProps, IUse
       title: '用户名',
       key: 'userName',
       dataIndex: 'userName',
+      align: 'center',
     },
     {
       title: '手机号',
       key: 'phone',
       dataIndex: 'phone',
+      align: 'center',
     },
     {
       title: '邮箱',
       key: 'email',
       dataIndex: 'email',
+      align: 'center',
+    },
+    {
+      title: '学历',
+      key: 'eduDesp',
+      dataIndex: 'eduDesp',
+      align: 'center',
     },
     {
       title: '创建时间',
       key: 'creatDate',
       dataIndex: 'creatDate',
+      align: 'center',
     },
     {
       title: '操作',
       key: 'opotor',
       dataIndex: 'opotor',
+      align: 'center',
       render: (text: any, record: any) => {
         return (
           <span>
@@ -113,6 +127,9 @@ export default class UserManagement extends Component<IUserManagementProps, IUse
     if (type === 'add') {
       this.setState({ userDetail: {} })
     } else if (type === 'edit') {
+      // setTimeout(() => {
+      //   this.setState({ userDetail: record })
+      // }, 10)
       this.setState({ userDetail: record })
     }
   }
@@ -135,6 +152,14 @@ export default class UserManagement extends Component<IUserManagementProps, IUse
   onSelectChange = (selectRowKeys: Array<any>, selectRows: Array<any>) => {
     this.setState({ selectRowKeys })
   }
+  successCallback = () => {
+    if (this.state.type === 'edit') {
+      this.searchTable.getTableData()
+    } else {
+      this.searchTable.refresh()
+    }
+    this.setState({visible: false})
+  }
   render(): ReactNode {
     const {type, visible, userDetail} = this.state
     return (
@@ -156,9 +181,7 @@ export default class UserManagement extends Component<IUserManagementProps, IUse
           width={800}
           footer={null}
         >
-          <p>
-            哈哈哈哈哈哈哈哈
-          </p>
+          <AddUser successCallback={this.successCallback} onCancel={() => this.setState({visible: false})} type={type} initialValues={userDetail} />
         </Modal>
       </div>
     )
@@ -170,36 +193,14 @@ class SearchForm extends Component {
       labelCol: { span: 4 },
       wrapperCol: { span: 19 },
     };
+    const colProps = {span: 8}
+    const content = [
+      {type: 'input', colProps, formItemProps: {name: 'userName', label: '用户名', ...layout}, inputProps: {placeholder: '请输入用户名'}},
+      {type: 'inputNumber', colProps, formItemProps: {name: 'phone', label: '手机号', ...layout}, inputNumberProps: {placeholder: '请输入手机号', style: {width: '100%'}}},
+      {type: 'input', colProps, formItemProps: {name: 'email', label: '邮箱', ...layout}, inputProps: {placeholder: '请输入邮箱'}},
+    ]
     return (
-      <Row>
-        <Col span={8}>
-          <Form.Item
-            label='用户名'
-            name='userName'
-            {...layout}
-          >
-            <Input placeholder='请输入用户名' />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label='邮箱'
-            name='email'
-            {...layout}
-          >
-            <Input placeholder='请输入邮箱' />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label='手机号'
-            name='phone'
-            {...layout}
-          >
-            <Input placeholder='请输入手机号' />
-          </Form.Item>
-        </Col>
-      </Row>
+      <FormWrapper content={content} />
     )
   }
 }
