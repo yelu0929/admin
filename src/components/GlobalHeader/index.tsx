@@ -21,7 +21,6 @@ interface GlobalHeaderProps {
   dispatch?: any;
 }
 const GlobalHeader: React.FC<GlobalHeaderProps> = (props) => {
-  console.log('99999999999999999999', props)
   const { currentUser, dispatch } = props
   const logout = () => {
     dispatch({

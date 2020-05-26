@@ -10,6 +10,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import Authorized from '@/utils/Authorized';
 import GlobalHeader from '@/components/GlobalHeader'
 import styles from './basicLayout.less'
+import menuName from '@/locales/zh-CN/menu'
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 // const fontJs = require('../assets/iconfont.js');
@@ -98,7 +99,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       const { name } = item;
       return (
         <SubMenu
-          title={name}
+          title={menuName[`menu.${name}`] || name}
           key={item.path}
         // icon={getIcon(item.icon)}
         >
@@ -123,7 +124,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       >
         {/* {icon} */}
         {/* {type === 2 && item.icon ? <img src={item.icon} /> : null} */}
-        <span>{item.name}</span>
+        <span>{menuName[`menu.${item.name}`] || item.name}</span>
       </Link>
     );
   }

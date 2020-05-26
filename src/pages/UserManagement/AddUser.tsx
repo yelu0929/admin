@@ -15,10 +15,12 @@ interface submitVal {
   emial?: string;
   edu?: string;
   id?: number;
+  dep?: any;
 }
 const AddUser: React.FC<AddUserProps> = props => {
   const [loading, setLoading] = useState(false)
   const [eduOptions, setEduOptions] = useState([])
+  const [departmentData, setDepartmentData] = useState([])
   const [form] = Form.useForm()
   const { initialValues = {}, onCancel, successCallback, type } = props
   useEffect(() => {
@@ -28,6 +30,14 @@ const AddUser: React.FC<AddUserProps> = props => {
     }).then(res => {
       if (res.status === 'ok') {
         setEduOptions(res.data)
+      }
+    })
+    getServices({
+      method: 'GET',
+      url: '/services/department/getData'
+    }).then(res => {
+      if (res.status === 'ok') {
+        setDepartmentData(res.data)
       }
     })
     form.setFieldsValue(initialValues)
@@ -67,6 +77,7 @@ const AddUser: React.FC<AddUserProps> = props => {
     {type: 'inputNumber', formItemProps: {name: 'phone', label: '手机号', rules}, inputNumberProps: {placeholder: '请输入手机号', style: {width: '100%'}}},
     {type: 'input', formItemProps: {name: 'email', label: '邮箱',}, inputProps: {placeholder: '请输入邮箱'}},
     {type: 'select', formItemProps: {name: 'edu', label: '学历',}, selectProps: {placeholder: '请选择', options: eduOptions}},
+    {type: 'cascader', formItemProps: {name: 'dep', label: '所属部门',rules}, cascaderProps: {placeholder: '请选择',fieldNames: {label: 'name', value: 'id', children: 'children'}, options: departmentData,changeOnSelect: true}},
   ]
   return (
     <Form

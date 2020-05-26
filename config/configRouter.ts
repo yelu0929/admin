@@ -22,45 +22,22 @@ export default [
         routes: [
           {
             path: '/',
-            redirect: '/home',
+            redirect: '/user/login',
           },
           {
             path: '/home',
-            name: '??',
+            name: 'home',
             component: './Welcome'
           },
           {
             path: '/userManagement',
-            name: '????',
+            name: 'userManagement',
             component: './UserManagement/UserManagement'
           },
-          // {
-          //   path: '/welcome',
-          //   name: 'welcome',
-          //   icon: 'smile',
-          //   component: './Welcome',
-          // },
           {
-            path: '/admin',
-            name: 'admin',
-            icon: 'crown',
-            component: './Admin',
-            authority: ['admin'],
-            routes: [
-              {
-                path: '/admin/sub-page',
-                name: 'sub-page',
-                icon: 'smile',
-                component: './Welcome',
-                authority: ['admin'],
-              },
-            ],
-          },
-          {
-            name: 'list.table-list',
-            icon: 'table',
-            path: '/list',
-            component: './ListTableList',
+            path: '/departmentManagement',
+            name: 'departmentManagement',
+            component: './DepartmentManagement/DepartmentManagement'
           },
           {
             component: './404',

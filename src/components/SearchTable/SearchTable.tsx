@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'React'
-import { Table, Spin, Form, Button, Space } from 'antd';
+import { Table, Spin, Form, Button, Space, message } from 'antd';
 import { connect, Dispatch } from 'umi';
 import { FormInstance } from 'antd/lib/form'
 import { getServices } from '@/services/searchTable'
@@ -84,6 +84,7 @@ export default class SearchTable extends Component<ISearchTableProp, ISeacrhTabl
           selectedRowKeys: [],
           selectedRows: [],
         })
+        this.setState({loading: true})
         getServices(requestData).then(res => {
           if (res) {
             if (res.status === 'ok') {
@@ -95,8 +96,11 @@ export default class SearchTable extends Component<ISearchTableProp, ISeacrhTabl
                 dataSource: data.data || [],
                 total: data.total || 0
               })
+            } else {
+              message.error(res.msg || '获取数据失败')
             }
           }
+          this.setState({loading: false})
         })
       })
     }
