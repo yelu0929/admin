@@ -13,36 +13,27 @@ export default [
   },
   {
     path: '/',
-    component: '../layouts/SecurityLayout',
+    component: '../layouts/BasicLayout',
+    authority: ['admin', 'user'],
     routes: [
       {
         path: '/',
-        component: '../layouts/BasicLayout',
-        authority: ['admin', 'user'],
-        routes: [
-          {
-            path: '/',
-            redirect: '/user/login',
-          },
-          {
-            path: '/home',
-            name: 'home',
-            component: './Welcome'
-          },
-          {
-            path: '/userManagement',
-            name: 'userManagement',
-            component: './UserManagement/UserManagement'
-          },
-          {
-            path: '/departmentManagement',
-            name: 'departmentManagement',
-            component: './DepartmentManagement/DepartmentManagement'
-          },
-          {
-            component: './404',
-          },
-        ],
+        redirect: '/user/login',
+      },
+      {
+        path: '/home',
+        name: 'home',
+        component: './Welcome'
+      },
+      {
+        path: '/userManagement',
+        name: 'userManagement',
+        component: './UserManagement/UserManagement'
+      },
+      {
+        path: '/departmentManagement',
+        name: 'departmentManagement',
+        component: './DepartmentManagement/DepartmentManagement'
       },
       {
         component: './404',

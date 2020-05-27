@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { connect, Dispatch } from 'umi';
+import { ConnectState } from '@/models/connect';
 import styles from './index.less'
 const logoImg = require('@/assets/logo.png')
 interface CurrentUserProp {
@@ -14,18 +15,21 @@ interface CurrentUserProp {
   account: string;
 }
 interface useProp {
-  currentUser: CurrentUserProp
+  status?: 'ok' | 'error';
+  type?: string;
+  currentUser?: object;
 }
 interface GlobalHeaderProps {
-  currentUser: CurrentUserProp;
   dispatch?: any;
 }
 const GlobalHeader: React.FC<GlobalHeaderProps> = (props) => {
-  const { currentUser, dispatch } = props
+  const { dispatch } = props
+  const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || JSON.stringify({}))
+  // const currentUser = sessionStorage.getItem('currentUser') ? JSON.parse(sessionStorage.getItem('currentUser')) : {}
   const logout = () => {
     dispatch({
       type: 'login/logout',
-      payload: {userName: currentUser.account},
+      payload: {},
     })
   }
   return (
@@ -36,12 +40,12 @@ const GlobalHeader: React.FC<GlobalHeaderProps> = (props) => {
       </div>
       <div className={styles.right}>
         <UserOutlined />
-        <span className={styles.headUser}>{currentUser.name}</span>
+        <span className={styles.headUser}>{currentUser.userName}</span>
         <span className={styles.headExit} onClick={logout}>退出</span>
       </div>
     </div>
   )
 }
-export default connect(({ user }: {user: useProp}) => ({
-  currentUser: user.currentUser,
+export default connect(({ login }: ConnectState) => ({
+  
 }))(GlobalHeader);

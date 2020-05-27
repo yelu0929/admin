@@ -35,7 +35,7 @@ interface routesItem {
   redirect?: string;
 }
 const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
-  const { children, route: { routes } } = props
+  const { children, route: { routes }, navTheme = 'dark' } = props
   const getNode = (data: Array<any>, key: string) => {
     let node = null
     const filter = (treeData: Array<any>) => {
@@ -143,6 +143,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         <Sider width={200} className={styles.menuLeft}>
           <Menu
             mode="inline"
+            theme={navTheme}
             defaultSelectedKeys={[location.pathname]}
             // defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}
