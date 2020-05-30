@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 
-const departmentData = [
+export const departmentData = [
   {
     name: '武汉水深火热公司',
     id: '10000',
     state: '1',
     isLeaf: false,
+    fullName: '武汉水深火热公司',
     children: [
       {
         name: '总裁办',
@@ -13,9 +14,10 @@ const departmentData = [
         state: '1',
         parentId: '10000',
         isLeaf: false,
+        fullName: '武汉水深火热公司>总裁办',
         children: [
-          { name: '总裁运营部', id: '10010',parentId: '10001',state: '1',isLeaf: true, },
-          { name: '总裁人资', id: '10011',parentId: '10001',state: '1', isLeaf: true,},
+          { name: '总裁运营部', id: '10010',parentId: '10001',state: '1',isLeaf: true,fullName: '武汉水深火热公司>总裁办>总裁运营部' },
+          { name: '总裁人资', id: '10011',parentId: '10001',state: '1', isLeaf: true,fullName: '武汉水深火热公司>总裁办>总裁人资'},
         ],
       },
       {
@@ -24,9 +26,10 @@ const departmentData = [
         state: '1',
         parentId: '10000',
         isLeaf: false,
+        fullName: '武汉水深火热公司>水深部',
         children: [
-          { name: '水深生产部', id: '10020',parentId: '10002',state: '1',isLeaf: true, },
-          { name: '水深资讯部', id: '10021',parentId: '10002',state: '1',isLeaf: true, },
+          { name: '水深生产部', id: '10020',parentId: '10002',state: '1',isLeaf: true,fullName: '武汉水深火热公司>水深部>水深生产部', },
+          { name: '水深资讯部', id: '10021',parentId: '10002',state: '1',isLeaf: true,fullName: '武汉水深火热公司>水深部>水深资讯部', },
         ],
       },
       {
@@ -35,6 +38,7 @@ const departmentData = [
         state: '1',
         parentId: '10000',
         isLeaf: true,
+        fullName: '武汉水深火热公司>火热部',
       },
       {
         name: '测试部门',
@@ -42,6 +46,7 @@ const departmentData = [
         state: '0',
         parentId: '10000',
         isLeaf: true,
+        fullName: '武汉水深火热公司>测试部门',
       },
     ],
   }

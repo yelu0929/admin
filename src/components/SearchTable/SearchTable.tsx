@@ -14,7 +14,7 @@ export interface transDataVoid {
   data: Array<any>;
   total: number;
 }
-interface ISearchTableProp {
+export interface ISearchTableProp {
   serchData: (values: any, current: number, pageSize: number) => serchData;
   pageSize?: number;
   transData?: (response: any) => transDataVoid;
@@ -25,7 +25,9 @@ interface ISearchTableProp {
   rowSelection?: boolean;
   isNotPagination?: boolean;
   rowKey?: string;
-  type?: 'checkbox' | 'radio';
+  type?: string;
+  clearSelected?: boolean;
+  selectedRowKeys?: Array<any>;
   onSelectChange?: (selectedRowKeys: Array<any>, selectedRows: Array<any>) => void;
   getCheckboxProps?: (record: any) => any;
   getInstance?: (ref: SearchTable) => void
@@ -45,6 +47,7 @@ export default class SearchTable extends Component<ISearchTableProp, ISeacrhTabl
     isNotPagination: false,
     rowSelection: true,
     rowKey: 'id',
+    clearSelected: true,
     transData: (response: any) => {
       return {
         data: response.root.data || response.root.list, // dataSource
@@ -59,7 +62,7 @@ export default class SearchTable extends Component<ISearchTableProp, ISeacrhTabl
       pageSize: this.props.pageSize || 10,
       total: 0,
       dataSource: [],
-      selectedRowKeys: [],
+      selectedRowKeys: props.selectedRowKeys || [],
       selectedRows: [],
       loading: false,
     }
@@ -80,7 +83,7 @@ export default class SearchTable extends Component<ISearchTableProp, ISeacrhTabl
           this.state.currentPage,
           this.state.pageSize,
         )
-        this.setState({
+        this.props.clearSelected && this.setState({
           selectedRowKeys: [],
           selectedRows: [],
         })
@@ -124,10 +127,10 @@ export default class SearchTable extends Component<ISearchTableProp, ISeacrhTabl
     return (
       <div className={styles.main}>
         <Spin spinning={loading}>
-          <div className={styles.searchForm}>
+          <div style={this.props.formItems ? {borderBottom: '1px solid #ccc', paddingBottom: 20} : {}}>
             <Form
               layout="inline"
-              style={{ overflow: 'hidden', paddingTop: 10 }}
+              style={{ overflow: 'hidden', paddingTop: this.props.formItems ? 10 : 0, height: this.props.formItems ? 'auto' : 0 }}
               // {...this.props.formProps}
               className={styles.formStyle}
               onFinish={this.getTableData}

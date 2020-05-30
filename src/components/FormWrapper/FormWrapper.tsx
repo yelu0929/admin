@@ -1,5 +1,6 @@
 import React, { Component, ReactNode,} from 'react'
-import { Form,Row, Col, Input, InputNumber, Select, DatePicker, Cascader, Checkbox, Radio } from 'antd'
+import { Form, Row, Col, Input, InputNumber, Select, DatePicker, Cascader, Checkbox, Radio } from 'antd'
+const { RangePicker } = DatePicker
 interface FormWrapperProps {
   initival?: object;
   content: Array<any>;
@@ -12,12 +13,24 @@ const FormWrapper: React.FC<FormWrapperProps> = (props) => {
         item.colProps = item.colProps || {span: 24}
         switch (item.type) {
           case 'selfDefined':
-              item.renderItem && item.renderItem()
+            if (item.renderItem) {
+              return item.renderItem()
+            } else {
+              return null
+            }
           case 'inputNumber':
             return (
               <Col {...item.colProps} key={index}>
                 <Form.Item {...item.formItemProps}>
                   <InputNumber {...item.inputNumberProps} />
+                </Form.Item>
+              </Col>
+            )
+          case 'rangePicker':
+            return (
+              <Col {...item.colProps} key={index}>
+                <Form.Item {...item.formItemProps}>
+                  <RangePicker {...item.rangePickerProps} />
                 </Form.Item>
               </Col>
             )

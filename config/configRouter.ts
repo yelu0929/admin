@@ -36,6 +36,18 @@ export default [
         component: './DepartmentManagement/DepartmentManagement'
       },
       {
+        path: '/infomationManagement',
+        name: 'infomationManagement',
+        // component: './InfomationManagement/article',
+        routes: [
+          { 
+            path: '/infomationManagement/article',
+            name: 'infomationManagement.article',
+            component: './InfomationManagement/Article/Article',
+          },
+        ]
+      },
+      {
         component: './404',
       },
     ],

@@ -11,6 +11,7 @@ import Authorized from '@/utils/Authorized';
 import GlobalHeader from '@/components/GlobalHeader'
 import styles from './basicLayout.less'
 import menuName from '@/locales/zh-CN/menu'
+import route from 'mock/route';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 // const fontJs = require('../assets/iconfont.js');
@@ -26,8 +27,8 @@ export interface BasicLayoutProps extends ProLayoutProps {
 interface routesItem {
   path: string;
   routes?: Array<routesItem>;
-  name: string;
-  component: string;
+  name?: string;
+  component?: string;
   authority?: Array<any>;
   icon?: string;
   children?: Array<any>;
@@ -95,7 +96,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       .filter(item => item);
   }
   const getSubMenu = (item: routesItem) => {
-    if (item.children && item.children.some(child => child.name)) {
+    if (item.children && item.children.some(child => child.name) && item.children.some(child => !child.hideInMenu)) {
       const { name } = item;
       return (
         <SubMenu
@@ -128,6 +129,15 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       </Link>
     );
   }
+  const defaultOpenKeys = () => {
+    let keys:Array<any> = []
+    routes && routes.map((item: any) => {
+      if (location.pathname && location.pathname.indexOf(item.path) > -1) {
+        keys.push(item.path)
+      }
+    })
+    return keys
+  }
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header className={styles.header}>
@@ -145,7 +155,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
             mode="inline"
             theme={navTheme}
             defaultSelectedKeys={[location.pathname]}
-            // defaultOpenKeys={['sub1']}
+            defaultOpenKeys={defaultOpenKeys()}
             style={{ height: '100%', borderRight: 0 }}
           >
             {getMenu(routes || [])}
